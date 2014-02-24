@@ -10,3 +10,10 @@ click Payment. Next, click install on the Cardstream row.
 **Step 3:**
 
 To begin editing the module settings, click Edit on the Cardstream row.
+
+| Config Option | Description |
+| :-------------|:------------|
+| Merchant ID | Enter your merchant ID here, or 0000992 for test mode. |
+| Currency ID | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
+| Country ID | The 3 digit ISO country code for your location. Use 826 for the UK. |
+| Position | If you are using multiple payment gateways, you can use this field to adjust what position the Cardstream option appears on – The lower the number, the higher up the list the option will be. Select ‘Enabled’ to make Cardstream your customers default payment gateway. |
