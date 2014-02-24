@@ -1,3 +1,6 @@
+Installation Instructions
+=========================
+
 **Step 1:**
 
 Copy the contents of the httpdocs directory into the root OpenCart directory.
