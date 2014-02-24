@@ -14,6 +14,9 @@ click Payment. Next, click install on the Cardstream row.
 
 To begin editing the module settings, click Edit on the Cardstream row.
 
+![Xcart Config settings](/images/cardstream-config-page.png)
+
+
 | Config Option | Description |
 | :-------------|:------------|
 | Merchant ID | Enter your merchant ID here, or 0000992 for test mode. |
