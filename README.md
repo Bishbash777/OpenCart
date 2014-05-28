@@ -19,6 +19,7 @@ To begin editing the module settings, click Edit on the Cardstream row.
 
 | Config Option | Description |
 | :-------------|:------------|
+| Integration Type | Toggle the module to use Hosted or Iframe Integration |
 | Merchant ID | Enter your merchant ID here, or 0000992 for test mode. |
 | Currency ID | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
 | Country ID | The 3 digit ISO country code for your location. Use 826 for the UK. |
