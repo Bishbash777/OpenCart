@@ -46,4 +46,4 @@
 	document.getElementById('cardstreamPaymentForm').submit();
 </script>
 
-<iframe id="cardstream_frame" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
+<iframe id="cardstream_frame" name="cardstream_form" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
