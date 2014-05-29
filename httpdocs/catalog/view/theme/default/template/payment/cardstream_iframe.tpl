@@ -27,6 +27,8 @@
 
 ?>
 
+<iframe id="cardstream_frame" name="cardstream_form" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
+
 <form id="cardstreamPaymentForm" action="https://gateway.cardstream.com/hosted/" method="post" target="cardstream_frame">
 	<?php
 		foreach ( $formdata as $key => $value ) {
@@ -35,15 +37,14 @@
 
 		}
 	?>
-	<div class="buttons">
+<!--	<div class="buttons">
 		<div class="right">
 			<input type="submit" value="<?php echo $button_confirm; ?>" class="button"/>
 		</div>
 	</div>
+	-->
 </form>
 
 <script>
 	document.getElementById('cardstreamPaymentForm').submit();
 </script>
-
-<iframe id="cardstream_frame" name="cardstream_form" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
