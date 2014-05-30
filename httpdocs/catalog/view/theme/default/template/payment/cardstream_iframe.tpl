@@ -27,7 +27,7 @@
 
 ?>
 
-<iframe id="cardstream_frame" name="cardstream_form" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
+<iframe id="cardstream_frame" name="cardstream_frame" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
 
 <form id="cardstreamPaymentForm" action="https://gateway.cardstream.com/hosted/" method="post" target="cardstream_frame">
 	<?php
