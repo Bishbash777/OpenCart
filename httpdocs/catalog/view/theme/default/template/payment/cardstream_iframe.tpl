@@ -23,7 +23,7 @@
 
 	$signature = http_build_query( $formdata, '', '&' ) . $merchantsecret;
 
-	$formdata['signature'] = hash( 'SHA512', $signature );
+	$formdata['signature'] = hash( 'SHA512', $signature ).'|'.implode(',', array_keys($formdata));
 
 ?>
 
