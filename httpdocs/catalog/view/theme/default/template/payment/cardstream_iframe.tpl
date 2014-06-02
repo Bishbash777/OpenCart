@@ -42,5 +42,14 @@
 </form>
 
 <script>
+	// detects if jquery is loaded and adjusts the form for mobile devices
+	if (window.jQuery) {
+		$(function(){
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				$('form#cardstreamPaymentForm').append('<input type="hidden" name="formResponsive"  value="Y"/>');
+				$('#cardstreamframe').css({ height : '1300px', width : '50%'});
+			}
+		});
+	}
 	document.getElementById('cardstreamPaymentForm').submit();
 </script>
