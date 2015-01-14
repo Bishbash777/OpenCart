@@ -1,3 +1,8 @@
+Compatibility
+=========================
+
+Compatible with version 1.5 of Opencart.
+
 Installation Instructions
 =========================
 
