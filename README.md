@@ -1,7 +1,9 @@
 Compatibility
 =========================
 
-Compatible with version 1.5 of Opencart.
+Version 0.1
+
+Compatible with version 2.0 of Opencart.
 
 Installation Instructions
 =========================
@@ -12,7 +14,7 @@ Copy the contents of the httpdocs directory into the root OpenCart directory.
 
 **Step 2:**
 
-Login to your OpenCart admin panel, then mouseover extensions in the top menu &amp;
+Login to your OpenCart admin panel, then click Extensions in the left menu &amp;
 click Payment. Next, click install on the Cardstream row.
 
 **Step 3:**

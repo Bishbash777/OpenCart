@@ -2,280 +2,286 @@
 
 class ControllerPaymentCardstream extends Controller {
 
-	protected function index() {
+	public function index() {
 
 		$this->load->language( 'payment/cardstream' );
 
 		if ( $this->config->get( 'cardstream_module_type' ) == 'hosted' ) {
-			$this->hosted_form();
+			$data = $this->hosted_form();
 		}
 
 		if ( $this->config->get( 'cardstream_module_type' ) == 'direct' ) {
-			$this->direct_form();
+			$data = $this->direct_form();
 		}
 
 		if($this->config->get('cardstream_module_type') == 'iframe'){
-			$this->iframe_form();
+			$data = $this->iframe_form();
 		}
 
-		$this->render();
+		return $this->load->view($data['template'], $data);
 
 	}
 
 	public function hosted_form() {
 
-		$this->data['button_confirm'] = $this->language->get( 'button_confirm' );
+		$data['button_confirm'] = $this->language->get( 'button_confirm' );
 
 		$this->load->model( 'checkout/order' );
 
 		$order_info = $this->model_checkout_order->getOrder( $this->session->data['order_id'] );
 
-		$this->data['merchantid']     = $this->config->get( 'cardstream_merchantid' );
-		$this->data['merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
-		$this->data['amount']         =
+		$data['merchantid']     = $this->config->get( 'cardstream_merchantid' );
+		$data['merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
+		$data['amount']         =
 			(int)round( ( $this->currency->format( $order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false ) *
 						  100 ) );
 
 
-		$this->data['countrycode'] = $this->config->get( 'cardstream_countrycode' );
+		$data['countrycode'] = $this->config->get( 'cardstream_countrycode' );
 
 		switch ( $order_info['currency_code'] ) {
 			case 'EUR':
-				$this->data['currencycode'] = 978;
+				$data['currencycode'] = 978;
 				break;
 			case 'USD':
-				$this->data['currencycode'] = 840;
+				$data['currencycode'] = 840;
 				break;
 			case 'GBP':
-				$this->data['currencycode'] = 826;
+				$data['currencycode'] = 826;
 				break;
 			default :
-				$this->data['currencycode'] = $this->config->get( 'cardstream_currencycode' );
+				$data['currencycode'] = $this->config->get( 'cardstream_currencycode' );
 				break;
 		}
 
-		$this->data['trans_id']  = $this->session->data['order_id'];
-		$this->data['callback']  = $this->url->link( 'payment/cardstream/callback', '', 'SSL' );
-		$this->data['bill_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		$data['trans_id']  = $this->session->data['order_id'];
+		$data['callback']  = $this->url->link( 'payment/cardstream/callback', '', 'SSL' );
+		$data['bill_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 
-		$this->data['bill_addr'] = "";
+		$data['bill_addr'] = "";
 
 		if ( isset( $order_info['payment_address_1'] ) && ( $order_info['payment_address_1'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_address_1'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_address_1'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_address_2'] ) && ( $order_info['payment_address_2'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_address_2'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_address_2'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_city'] ) && ( $order_info['payment_city'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_city'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_city'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_zone'] ) && ( $order_info['payment_zone'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_zone'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_zone'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_country'] ) && ( $order_info['payment_country'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_country'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_country'] . ",\n";
 
 		}
 
-		if ( strlen( $this->data['bill_addr'] ) > 1 ) {
+		if ( strlen( $data['bill_addr'] ) > 1 ) {
 
-			$this->data['bill_addr'] = substr( trim( $this->data['bill_addr'] ), 0, -1 );
+			$data['bill_addr'] = substr( trim( $data['bill_addr'] ), 0, -1 );
 
 		}
 
-		$this->data['bill_post_code'] = $order_info['payment_postcode'];
-		$this->data['bill_email']     = $order_info['email'];
-		$this->data['bill_tel']       = $order_info['telephone'];
+		$data['bill_post_code'] = $order_info['payment_postcode'];
+		$data['bill_email']     = $order_info['email'];
+		$data['bill_tel']       = $order_info['telephone'];
 
 		if ( file_exists( DIR_TEMPLATE . $this->config->get( 'config_template' ) . '/template/payment/cardstream_hosted.tpl' )
 		) {
 
-			$this->template = $this->config->get( 'config_template' ) . '/template/payment/cardstream_hosted.tpl';
+			$data['template'] = $this->config->get( 'config_template' ) . '/template/payment/cardstream_hosted.tpl';
 
 		} else {
 
-			$this->template = 'default/template/payment/cardstream_hosted.tpl';
+			$data['template'] = 'default/template/payment/cardstream_hosted.tpl';
 
 		}
+
+		return $data;
 
 	}
 
 	public function iframe_form() {
 
-		$this->data['button_confirm'] = $this->language->get( 'button_confirm' );
+		$data['button_confirm'] = $this->language->get( 'button_confirm' );
 
 		$this->load->model( 'checkout/order' );
 
 		$order_info = $this->model_checkout_order->getOrder( $this->session->data['order_id'] );
 
-		$this->data['merchantid']     = $this->config->get( 'cardstream_merchantid' );
-		$this->data['merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
-		$this->data['amount']         =
+		$data['merchantid']     = $this->config->get( 'cardstream_merchantid' );
+		$data['merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
+		$data['amount']         =
 			(int)round( ( $this->currency->format( $order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false ) *
 						  100 ) );
 
 
-		$this->data['countrycode'] = $this->config->get( 'cardstream_countrycode' );
+		$data['countrycode'] = $this->config->get( 'cardstream_countrycode' );
 
 		switch ( $order_info['currency_code'] ) {
 			case 'EUR':
-				$this->data['currencycode'] = 978;
+				$data['currencycode'] = 978;
 				break;
 			case 'USD':
-				$this->data['currencycode'] = 840;
+				$data['currencycode'] = 840;
 				break;
 			case 'GBP':
-				$this->data['currencycode'] = 826;
+				$data['currencycode'] = 826;
 				break;
 			default :
-				$this->data['currencycode'] = $this->config->get( 'cardstream_currencycode' );
+				$data['currencycode'] = $this->config->get( 'cardstream_currencycode' );
 				break;
 		}
 
-		$this->data['trans_id']  = $this->session->data['order_id'];
-		$this->data['callback']  = $this->url->link( 'payment/cardstream/callback', '', 'SSL' );
-		$this->data['bill_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		$data['trans_id']  = $this->session->data['order_id'];
+		$data['callback']  = $this->url->link( 'payment/cardstream/callback', '', 'SSL' );
+		$data['bill_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 
-		$this->data['bill_addr'] = "";
+		$data['bill_addr'] = "";
 
 		if ( isset( $order_info['payment_address_1'] ) && ( $order_info['payment_address_1'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_address_1'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_address_1'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_address_2'] ) && ( $order_info['payment_address_2'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_address_2'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_address_2'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_city'] ) && ( $order_info['payment_city'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_city'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_city'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_zone'] ) && ( $order_info['payment_zone'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_zone'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_zone'] . ",\n";
 
 		}
 
 		if ( isset( $order_info['payment_country'] ) && ( $order_info['payment_country'] != "" ) ) {
 
-			$this->data['bill_addr'] .= $order_info['payment_country'] . ",\n";
+			$data['bill_addr'] .= $order_info['payment_country'] . ",\n";
 
 		}
 
-		if ( strlen( $this->data['bill_addr'] ) > 1 ) {
+		if ( strlen( $data['bill_addr'] ) > 1 ) {
 
-			$this->data['bill_addr'] = substr( trim( $this->data['bill_addr'] ), 0, -1 );
+			$data['bill_addr'] = substr( trim( $data['bill_addr'] ), 0, -1 );
 
 		}
 
-		$this->data['bill_post_code'] = $order_info['payment_postcode'];
-		$this->data['bill_email']     = $order_info['email'];
-		$this->data['bill_tel']       = $order_info['telephone'];
+		$data['bill_post_code'] = $order_info['payment_postcode'];
+		$data['bill_email']     = $order_info['email'];
+		$data['bill_tel']       = $order_info['telephone'];
 
 		if ( file_exists( DIR_TEMPLATE . $this->config->get( 'config_template' ) . '/template/payment/cardstream_iframe.tpl' )
 		) {
 
-			$this->template = $this->config->get( 'config_template' ) . '/template/payment/cardstream_iframe.tpl';
+			$data['template'] = $this->config->get( 'config_template' ) . '/template/payment/cardstream_iframe.tpl';
 
 		} else {
 
-			$this->template = 'default/template/payment/cardstream_iframe.tpl';
+			$data['template'] = 'default/template/payment/cardstream_iframe.tpl';
 
 		}
+
+		return $data;
 
 	}
 
 	public function direct_form() {
 
-		$this->data['cards'] = array();
+		$data['cards'] = array();
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Visa',
 			'value' => 'VISA'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'MasterCard',
 			'value' => 'MC'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Visa Delta/Debit',
 			'value' => 'DELTA'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Solo',
 			'value' => 'SOLO'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Maestro',
 			'value' => 'MAESTRO'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Visa Electron UK Debit',
 			'value' => 'UKE'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'American Express',
 			'value' => 'AMEX'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Diners Club',
 			'value' => 'DC'
 		);
 
-		$this->data['cards'][] = array(
+		$data['cards'][] = array(
 			'text'  => 'Japan Credit Bureau',
 			'value' => 'JCB'
 		);
 
-		$this->data['cc_cardholder_name']  = $this->language->get( 'cc_cardholder_name' );
-		$this->data['cc_card_number']      = $this->language->get( 'cc_card_number' );
-		$this->data['cc_card_start_date']  = $this->language->get( 'cc_card_start_date' );
-		$this->data['cc_card_start_date_help']  = $this->language->get( 'cc_card_start_date_help' );
-		$this->data['cc_card_expiry_date'] = $this->language->get( 'cc_card_expiry_date' );
-		$this->data['cc_card_cvv']         = $this->language->get( 'cc_card_cvv' );
-		$this->data['cc_card_type']         = $this->language->get( 'cc_card_type' );
-		$this->data['cc_card_issue']         = $this->language->get( 'cc_card_issue' );
-		$this->data['cc_card_issue_help']         = $this->language->get( 'cc_card_issue_help' );
-		$this->data['text_credit_card']         = $this->language->get( 'text_credit_card' );
-		$this->data['button_confirm']         = $this->language->get( 'button_confirm' );
+		$data['cc_cardholder_name']  			= $this->language->get( 'cc_cardholder_name' );
+		$data['cc_card_number']      			= $this->language->get( 'cc_card_number' );
+		$data['cc_card_start_date']  			= $this->language->get( 'cc_card_start_date' );
+		$data['cc_card_start_date_help']  = $this->language->get( 'cc_card_start_date_help' );
+		$data['cc_card_expiry_date'] 			= $this->language->get( 'cc_card_expiry_date' );
+		$data['cc_card_cvv']         			= $this->language->get( 'cc_card_cvv' );
+		$data['cc_card_type']         		= $this->language->get( 'cc_card_type' );
+		$data['cc_card_issue']         		= $this->language->get( 'cc_card_issue' );
+		$data['cc_card_issue_help']				= $this->language->get( 'cc_card_issue_help' );
+		$data['text_credit_card']         = $this->language->get( 'text_credit_card' );
+		$data['button_confirm']         	= $this->language->get( 'button_confirm' );
 
 
 		if ( file_exists( DIR_TEMPLATE . $this->config->get( 'config_template' ) . '/template/payment/cardstream_direct.tpl' )
 		) {
 
-			$this->template = $this->config->get( 'config_template' ) . '/template/payment/cardstream_direct.tpl';
+			$data['template'] = $this->config->get( 'config_template' ) . '/template/payment/cardstream_direct.tpl';
 
 		} else {
 
-			$this->template = 'default/template/payment/cardstream_direct.tpl';
+			$data['template'] = 'default/template/payment/cardstream_direct.tpl';
 
 		}
+
+		return $data;
 
 	}
 
@@ -302,33 +308,33 @@ class ControllerPaymentCardstream extends Controller {
 
 			$this->language->load( 'payment/cardstream' );
 
-			$this->data['title'] =
+			$data['title'] =
 				sprintf( $this->language->get( 'heading_title' ), $this->config->get( 'config_name' ) );
 
 			if ( !isset( $this->request->server['HTTPS'] ) || ( $this->request->server['HTTPS'] != 'on' ) ) {
 
-				$this->data['base'] = HTTP_SERVER;
+				$data['base'] = HTTP_SERVER;
 
 			} else {
 
-				$this->data['base'] = HTTPS_SERVER;
+				$data['base'] = HTTPS_SERVER;
 
 			}
 
-			$this->data['language']  = $this->language->get( 'code' );
-			$this->data['direction'] = $this->language->get( 'direction' );
+			$data['language']  = $this->language->get( 'code' );
+			$data['direction'] = $this->language->get( 'direction' );
 
-			$this->data['heading_title'] =
+			$data['heading_title'] =
 				sprintf( $this->language->get( 'heading_title' ), $this->config->get( 'config_name' ) );
 
-			$this->data['text_response']     = $this->language->get( 'text_response' );
-			$this->data['text_success']      = $this->language->get( 'text_success' );
-			$this->data['text_success_wait'] =
+			$data['text_response']     = $this->language->get( 'text_response' );
+			$data['text_success']      = $this->language->get( 'text_success' );
+			$data['text_success_wait'] =
 				sprintf( $this->language->get( 'text_success_wait' ), $this->url->link( 'checkout/success' ) );
-			$this->data['text_failure']      = $this->language->get( 'text_failure' );
-			$this->data['text_failure_wait'] =
+			$data['text_failure']      = $this->language->get( 'text_failure' );
+			$data['text_failure_wait'] =
 				sprintf( $this->language->get( 'text_failure_wait' ), $this->url->link( 'checkout/cart' ) );
-			$this->data['text_mismatch']     = $this->language->get( 'text_mismatch' );
+			$data['text_mismatch']     = $this->language->get( 'text_mismatch' );
 
 			if ( isset( $this->request->post['responseCode'] ) && $this->request->post['responseCode'] === "0" ) {
 				//var_dump((int) round( ( $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100 ) ),$this->request->post['amount'], $order_info['total']*100, $order_info,$this->request );
@@ -340,97 +346,95 @@ class ControllerPaymentCardstream extends Controller {
 
 					$this->load->model( 'checkout/order' );
 
-					$this->model_checkout_order->confirm( $this->request->post['transactionUnique'], $this->config->get( 'config_order_status_id' ) );
-
 					$message = $this->buildordermessage();
 
-					$this->model_checkout_order->update( $order_id, $this->config->get( 'cardstream_order_status_id' ), $message, false );
+					$this->model_checkout_order->addOrderHistory( $order_id, $this->config->get( 'cardstream_order_status_id' ), $message, false );
 
-					$this->data['continue'] = $this->url->link( 'checkout/success' );
+					// $this->model_checkout_order->confirm( $this->request->post['transactionUnique'], $this->config->get( 'config_order_status_id' ) );
+
+
+					// $this->model_checkout_order->update( $order_id, $this->config->get( 'cardstream_order_status_id' ), $message, false );
+
+					$data['continue'] = $this->url->link( 'checkout/success' );
 
 					if ( file_exists( DIR_TEMPLATE . $this->config->get( 'config_template' ) .
 									  '/template/payment/cardstream_success.tpl' )
 					) {
 
-						$this->template =
+						$data['template'] =
 							$this->config->get( 'config_template' ) . '/template/payment/cardstream_success.tpl';
 
 					} else {
 
-						$this->template = 'default/template/payment/cardstream_success.tpl';
+						$data['template'] = 'default/template/payment/cardstream_success.tpl';
 
 					}
 
-					$this->children = array(
-						'common/column_left',
-						'common/column_right',
-						'common/content_top',
-						'common/content_bottom',
-						'common/footer',
-						'common/header'
-					);
 
-					$this->response->setOutput( $this->render() );
+					$data['header'] 				= $this->load->controller('common/header');
+					$data['column_left'] 		= $this->load->controller('common/column_left');
+					$data['column_right'] 	= $this->load->controller('common/column_right');
+					$data['content_top'] 		= $this->load->controller('common/content_top');
+					$data['content_bottom'] = $this->load->controller('common/content_bottom');
+					$data['footer'] 				= $this->load->controller('common/footer');
 
+					$this->response->setOutput($this->load->view($data['template'], $data));
+					// $this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
 
 				} else {
 					//Amount paid doesn't match the amount required.
 
-					$this->data['continue'] = $this->url->link( 'checkout/cart' );
+					$data['continue'] = $this->url->link( 'checkout/cart' );
 
 					if ( file_exists( DIR_TEMPLATE . $this->config->get( 'config_template' ) .
 									  '/template/payment/cardstream_mismatch.tpl' )
 					) {
 
-						$this->template =
+						$data['template'] =
 							$this->config->get( 'config_template' ) . '/template/payment/cardstream_mismatch.tpl';
 
 					} else {
 
-						$this->template = 'default/template/payment/cardstream_mismatch.tpl';
+						$data['template'] = 'default/template/payment/cardstream_mismatch.tpl';
 
 					}
 
-					$this->children = array(
-						'common/column_left',
-						'common/column_right',
-						'common/content_top',
-						'common/content_bottom',
-						'common/footer',
-						'common/header'
-					);
+					$data['header'] 				= $this->load->controller('common/header');
+					$data['column_left'] 		= $this->load->controller('common/column_left');
+					$data['column_right'] 	= $this->load->controller('common/column_right');
+					$data['content_top'] 		= $this->load->controller('common/content_top');
+					$data['content_bottom'] = $this->load->controller('common/content_bottom');
+					$data['footer'] 				= $this->load->controller('common/footer');
 
-					$this->response->setOutput( $this->render() );
+					$this->response->setOutput($this->load->view($data['template'], $data));
 
 				}
 
 			} else {
 
-				$this->data['continue'] = $this->url->link( 'checkout/cart' );
+				$data['continue'] = $this->url->link( 'checkout/cart' );
 
 				if ( file_exists( DIR_TEMPLATE . $this->config->get( 'config_template' ) .
 								  '/template/payment/cardstream_failure.tpl' )
 				) {
 
-					$this->template =
+					$data['template'] =
 						$this->config->get( 'config_template' ) . '/template/payment/cardstream_failure.tpl';
 
 				} else {
 
-					$this->template = 'default/template/payment/cardstream_failure.tpl';
+					$data['template'] = 'default/template/payment/cardstream_failure.tpl';
 
 				}
 
-				$this->children = array(
-					'common/column_left',
-					'common/column_right',
-					'common/content_top',
-					'common/content_bottom',
-					'common/footer',
-					'common/header'
-				);
+				$data['header'] 				= $this->load->controller('common/header');
+				$data['column_left'] 		= $this->load->controller('common/column_left');
+				$data['column_right'] 	= $this->load->controller('common/column_right');
+				$data['content_top'] 		= $this->load->controller('common/content_top');
+				$data['content_bottom'] = $this->load->controller('common/content_bottom');
+				$data['footer'] 				= $this->load->controller('common/footer');
 
-				$this->response->setOutput( $this->render() );
+				$this->response->setOutput($this->load->view($data['template'], $data));
 
 			}
 
