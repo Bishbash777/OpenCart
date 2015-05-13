@@ -1,7 +1,7 @@
 Compatibility
 =========================
 
-Compatible with version 1.5 of Opencart.
+Compatible with version 2.0.x of Opencart, is not compatable with version 1.5.6.4 and below.
 
 Installation Instructions
 =========================

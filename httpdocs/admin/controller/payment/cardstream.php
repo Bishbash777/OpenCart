@@ -2,292 +2,279 @@
 
 class ControllerPaymentCardstream extends Controller {
 
-	private $error = array();
+    private $error = array();
 
-	public function index() {
+    public function index() {
 
-		$this->load->language( 'payment/cardstream' );
+        $this->load->language( 'payment/cardstream' );
 
-		$this->document->setTitle( $this->language->get( 'heading_title' ) );
+        $this->document->setTitle( $this->language->get( 'heading_title' ) );
 
-		$this->load->model( 'setting/setting' );
+        $this->load->model( 'setting/setting' );
 
-		if ( ( $this->request->server['REQUEST_METHOD'] == 'POST' ) && $this->validate() ) {
+        if ( ( $this->request->server['REQUEST_METHOD'] == 'POST' ) && $this->validate() ) {
 
-			$this->model_setting_setting->editSetting( 'cardstream', $this->request->post );
+            $this->model_setting_setting->editSetting( 'cardstream', $this->request->post );
 
-			$this->session->data['success'] = $this->language->get( 'text_success' );
+            $this->session->data['success'] = $this->language->get( 'text_success' );
 
-			$this->redirect( $this->url->link( 'extension/payment',
-				'token=' . $this->session->data['token'], 'SSL' ) );
+            $this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 
-		}
+        }
 
-		$this->data['heading_title'] = $this->language->get( 'heading_title' );
+        $data['heading_title'] = $this->language->get( 'heading_title' );
 
-		$this->data['text_enabled']    = $this->language->get( 'text_enabled' );
-		$this->data['text_disabled']   = $this->language->get( 'text_disabled' );
-		$this->data['text_all_zones']  = $this->language->get( 'text_all_zones' );
-		$this->data['text_yes']        = $this->language->get( 'text_yes' );
-		$this->data['text_no']         = $this->language->get( 'text_no' );
-		$this->data['text_live']       = $this->language->get( 'text_live' );
-		$this->data['text_successful'] = $this->language->get( 'text_successful' );
-		$this->data['text_fail']       = $this->language->get( 'text_fail' );
+        $data['text_edit'] = $this->language->get('text_edit');
 
-		$this->data['entry_merchantid']     = $this->language->get( 'entry_merchantid' );
-		$this->data['entry_merchantsecret'] = $this->language->get( 'entry_merchantsecret' );
-		$this->data['entry_order_status']   = $this->language->get( 'entry_order_status' );
-		$this->data['entry_geo_zone']       = $this->language->get( 'entry_geo_zone' );
-		$this->data['entry_status']         = $this->language->get( 'entry_status' );
-		$this->data['entry_sort_order']     = $this->language->get( 'entry_sort_order' );
+        // place holder texts
+        $data['text_merchantid'] = $this->language->get('text_merchantid');
+        $data['text_merchantsecret'] = $this->language->get('text_merchantsecret');
+        $data['text_currencycode'] = $this->language->get('text_currencycode');
+        $data['text_countrycode'] = $this->language->get('text_countrycode');
 
-		$this->data['entry_currencycode'] = $this->language->get( 'entry_currencycode' );
-		$this->data['entry_countrycode']  = $this->language->get( 'entry_countrycode' );
+        $data['text_enabled']    = $this->language->get( 'text_enabled' );
+        $data['text_disabled']   = $this->language->get( 'text_disabled' );
+        $data['text_all_zones']  = $this->language->get( 'text_all_zones' );
+        $data['text_yes']        = $this->language->get( 'text_yes' );
+        $data['text_no']         = $this->language->get( 'text_no' );
+        $data['text_live']       = $this->language->get( 'text_live' );
+        $data['text_successful'] = $this->language->get( 'text_successful' );
+        $data['text_fail']       = $this->language->get( 'text_fail' );
 
-		$this->data['button_save']   = $this->language->get( 'button_save' );
-		$this->data['button_cancel'] = $this->language->get( 'button_cancel' );
+        $data['entry_merchantid']     = $this->language->get( 'entry_merchantid' );
+        $data['entry_merchantsecret'] = $this->language->get( 'entry_merchantsecret' );
+        $data['entry_order_status']   = $this->language->get( 'entry_order_status' );
+        $data['entry_geo_zone']       = $this->language->get( 'entry_geo_zone' );
+        $data['entry_status']         = $this->language->get( 'entry_status' );
+        $data['entry_sort_order']     = $this->language->get( 'entry_sort_order' );
 
-		// cardstream module type selection
-		$this->data['entry_module_type']   = $this->language->get( 'entry_module_type' );
-		$this->data['entry_module_hosted'] = $this->language->get( 'entry_module_hosted' );
-		$this->data['entry_module_iframe'] = $this->language->get( 'entry_module_iframe' );
-		//$this->data['entry_module_direct'] = $this->language->get( 'entry_module_direct' );
+        $data['entry_currencycode'] = $this->language->get( 'entry_currencycode' );
+        $data['entry_countrycode']  = $this->language->get( 'entry_countrycode' );
 
+        $data['button_save']   = $this->language->get( 'button_save' );
+        $data['button_cancel'] = $this->language->get( 'button_cancel' );
 
-		if ( isset( $this->error['warning'] ) ) {
+        // cardstream module type selection
+        $data['entry_module_type']   = $this->language->get( 'entry_module_type' );
+        $data['entry_module_hosted'] = $this->language->get( 'entry_module_hosted' );
+        $data['entry_module_iframe'] = $this->language->get( 'entry_module_iframe' );
+        //$data['entry_module_direct'] = $this->language->get( 'entry_module_direct' );
 
-			$this->data['error_warning'] = $this->error['warning'];
 
-		} /*else {
+        if ( isset( $this->error['warning'] ) ) {
+            $data['error_warning'] = $this->error['warning'];
+        }
 
-			$this->data['error_warning'] = '';
+        if ( isset( $this->error['merchantid'] ) ) {
+            $data['error_merchantid'] = $this->error['merchantid'];
+        }
 
-		}*/
+        if ( isset( $this->error['merchantsecret'] ) ) {
 
-		if ( isset( $this->error['merchantid'] ) ) {
+            $data['error_merchantsecret'] = $this->error['merchantsecret'];
 
-			$this->data['error_merchantid'] = $this->error['merchantid'];
+        }
 
-		} /*else {
+        if ( isset( $this->error['currencycode'] ) ) {
 
-			$this->data['error_merchantid'] = '';
+            $data['error_currencycode'] = $this->error['currencycode'];
 
-		}*/
+        }
 
-		if ( isset( $this->error['merchantsecret'] ) ) {
+        if ( isset( $this->error['countrycode'] ) ) {
 
-			$this->data['error_merchantsecret'] = $this->error['merchantsecret'];
+            $data['error_countrycode'] = $this->error['countrycode'];
 
-		} /*else {
+        }
 
-			$this->data['error_merchantsecret'] = '';
 
-		}*/
+        $data['breadcrumbs'] = array();
 
-		if ( isset( $this->error['currencycode'] ) ) {
+        $data['breadcrumbs'][] = array(
+            'text'      => $this->language->get( 'text_home' ),
+            'href'      => $this->url->link( 'common/home', 'token=' . $this->session->data['token'], 'SSL' ),
+            'separator' => false
+        );
 
-			$this->data['error_currencycode'] = $this->error['currencycode'];
+        $data['breadcrumbs'][] = array(
+            'text'      => $this->language->get( 'text_payment' ),
+            'href'      => $this->url->link( 'extension/payment', 'token=' . $this->session->data['token'], 'SSL' ),
+            'separator' => ' :: '
+        );
 
-		} /*else {
+        $data['breadcrumbs'][] = array(
+            'text'      => $this->language->get( 'heading_title' ),
+            'href'      => $this->url->link( 'payment/cardstream', 'token=' . $this->session->data['token'], 'SSL' ),
+            'separator' => ' :: '
+        );
 
-			$this->data['error_currencycode'] = '';
 
-		}*/
+        $data['action'] =
+            $this->url->link( 'payment/cardstream', 'token=' . $this->session->data['token'], 'SSL' );
 
-		if ( isset( $this->error['countrycode'] ) ) {
+        $data['cancel'] =
+            $this->url->link( 'extension/payment', 'token=' . $this->session->data['token'], 'SSL' );
 
-			$this->data['error_countrycode'] = $this->error['countrycode'];
+        if ( isset( $this->request->post['cardstream_merchantid'] ) ) {
 
-		}
-		/* else {
+            $data['cardstream_merchantid'] = $this->request->post['cardstream_merchantid'];
 
-					$this->data['error_countrycode'] = '';
+        } else {
 
-				}*/
+            $data['cardstream_merchantid'] = $this->config->get( 'cardstream_merchantid' );
 
-		$this->data['breadcrumbs'] = array();
+        }
 
-		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get( 'text_home' ),
-			'href'      => $this->url->link( 'common/home', 'token=' . $this->session->data['token'], 'SSL' ),
-			'separator' => false
-		);
+        if ( isset( $this->request->post['cardstream_merchantsecret'] ) ) {
 
-		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get( 'text_payment' ),
-			'href'      => $this->url->link( 'extension/payment', 'token=' . $this->session->data['token'], 'SSL' ),
-			'separator' => ' :: '
-		);
+            $data['cardstream_merchantsecret'] = $this->request->post['cardstream_merchantsecret'];
 
-		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get( 'heading_title' ),
-			'href'      => $this->url->link( 'payment/cardstream', 'token=' . $this->session->data['token'], 'SSL' ),
-			'separator' => ' :: '
-		);
+        } else {
 
+            $data['cardstream_merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
 
-		$this->data['action'] =
-			$this->url->link( 'payment/cardstream', 'token=' . $this->session->data['token'], 'SSL' );
+        }
 
-		$this->data['cancel'] =
-			$this->url->link( 'extension/payment', 'token=' . $this->session->data['token'], 'SSL' );
+        if ( isset( $this->request->post['cardstream_order_status_id'] ) ) {
 
-		if ( isset( $this->request->post['cardstream_merchantid'] ) ) {
+            $data['cardstream_order_status_id'] = $this->request->post['cardstream_order_status_id'];
 
-			$this->data['cardstream_merchantid'] = $this->request->post['cardstream_merchantid'];
+        } else {
 
-		} else {
+            $data['cardstream_order_status_id'] = $this->config->get( 'cardstream_order_status_id' );
 
-			$this->data['cardstream_merchantid'] = $this->config->get( 'cardstream_merchantid' );
+        }
 
-		}
+        $this->load->model( 'localisation/order_status' );
 
-		if ( isset( $this->request->post['cardstream_merchantsecret'] ) ) {
+        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-			$this->data['cardstream_merchantsecret'] = $this->request->post['cardstream_merchantsecret'];
+        if ( isset( $this->request->post['cardstream_geo_zone_id'] ) ) {
 
-		} else {
+            $data['cardstream_geo_zone_id'] = $this->request->post['cardstream_geo_zone_id'];
 
-			$this->data['cardstream_merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
+        } else {
 
-		}
+            $data['cardstream_geo_zone_id'] = $this->config->get( 'cardstream_geo_zone_id' );
 
-		if ( isset( $this->request->post['cardstream_order_status_id'] ) ) {
+        }
 
-			$this->data['cardstream_order_status_id'] = $this->request->post['cardstream_order_status_id'];
+        $this->load->model( 'localisation/geo_zone' );
 
-		} else {
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-			$this->data['cardstream_order_status_id'] = $this->config->get( 'cardstream_order_status_id' );
+        if ( isset( $this->request->post['cardstream_status'] ) ) {
 
-		}
+            $data['cardstream_status'] = $this->request->post['cardstream_status'];
 
-		$this->load->model( 'localisation/order_status' );
+        } else {
 
-		$this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+            $data['cardstream_status'] = $this->config->get( 'cardstream_status' );
 
-		if ( isset( $this->request->post['cardstream_geo_zone_id'] ) ) {
+        }
 
-			$this->data['cardstream_geo_zone_id'] = $this->request->post['cardstream_geo_zone_id'];
+        if ( isset( $this->request->post['cardstream_sort_order'] ) ) {
 
-		} else {
+            $data['cardstream_sort_order'] = $this->request->post['cardstream_sort_order'];
 
-			$this->data['cardstream_geo_zone_id'] = $this->config->get( 'cardstream_geo_zone_id' );
+        } else {
 
-		}
+            $data['cardstream_sort_order'] = $this->config->get( 'cardstream_sort_order' );
 
-		$this->load->model( 'localisation/geo_zone' );
+        }
 
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+        if ( isset( $this->request->post['cardstream_currencycode'] ) ) {
 
-		if ( isset( $this->request->post['cardstream_status'] ) ) {
+            $data['cardstream_currencycode'] = $this->request->post['cardstream_currencycode'];
 
-			$this->data['cardstream_status'] = $this->request->post['cardstream_status'];
+        } else {
 
-		} else {
+            $data['cardstream_currencycode'] = $this->config->get( 'cardstream_currencycode' );
 
-			$this->data['cardstream_status'] = $this->config->get( 'cardstream_status' );
+        }
 
-		}
+        if ( isset( $this->request->post['cardstream_countrycode'] ) ) {
 
-		if ( isset( $this->request->post['cardstream_sort_order'] ) ) {
+            $data['cardstream_countrycode'] = $this->request->post['cardstream_countrycode'];
 
-			$this->data['cardstream_sort_order'] = $this->request->post['cardstream_sort_order'];
+        } else {
 
-		} else {
+            $data['cardstream_countrycode'] = $this->config->get( 'cardstream_countrycode' );
 
-			$this->data['cardstream_sort_order'] = $this->config->get( 'cardstream_sort_order' );
+        }
 
-		}
+        // cardstream module type selection
+        if ( isset( $this->request->post['cardstream_module_type'] ) ) {
 
-		if ( isset( $this->request->post['cardstream_currencycode'] ) ) {
+            $data['cardstream_module_type'] = $this->request->post['cardstream_module_type'];
 
-			$this->data['cardstream_currencycode'] = $this->request->post['cardstream_currencycode'];
+        } else {
 
-		} else {
+            $data['cardstream_module_type'] = $this->config->get( 'cardstream_module_type' );
 
-			$this->data['cardstream_currencycode'] = $this->config->get( 'cardstream_currencycode' );
+        }
 
-		}
+        $this->template = 'payment/cardstream.tpl';
 
-		if ( isset( $this->request->post['cardstream_countrycode'] ) ) {
+        $this->children = array(
+            'common/header',
+            'common/footer'
+        );
 
-			$this->data['cardstream_countrycode'] = $this->request->post['cardstream_countrycode'];
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+        $this->response->setOutput( $this->load->view($this->template, $data), $data );
 
-		} else {
+    }
 
-			$this->data['cardstream_countrycode'] = $this->config->get( 'cardstream_countrycode' );
+    private function validate() {
 
-		}
+        if ( !$this->user->hasPermission( 'modify', 'payment/cardstream' ) ) {
 
-		// cardstream module type selection
-		if ( isset( $this->request->post['cardstream_module_type'] ) ) {
+            $this->error['warning'] = $this->language->get( 'error_permission' );
 
-			$this->data['cardstream_module_type'] = $this->request->post['cardstream_module_type'];
+        }
 
-		} else {
+        if ( !$this->request->post['cardstream_merchantid'] ) {
 
-			$this->data['cardstream_module_type'] = $this->config->get( 'cardstream_module_type' );
+            $this->error['merchantid'] = $this->language->get( 'error_merchantid' );
+            $this->error['warning'] = $this->language->get( 'error_data' );
 
-		}
+        }
 
-		$this->template = 'payment/cardstream.tpl';
+        if ( !$this->request->post['cardstream_merchantsecret'] ) {
 
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+            $this->error['merchantsecret'] = $this->language->get( 'error_merchantsecret' );
+            $this->error['warning'] = $this->language->get( 'error_data' );
+        }
 
-		$this->response->setOutput( $this->render() );
+        if ( ( !$this->request->post['cardstream_currencycode'] ) ||
+            ( !is_numeric( $this->request->post['cardstream_currencycode'] ) )
+        ) {
 
-	}
+            $this->error['currencycode'] = $this->language->get( 'error_currencycode' );
+            $this->error['warning'] = $this->language->get( 'error_data' );
+        }
 
-	private function validate() {
+        if ( ( !$this->request->post['cardstream_countrycode'] ) ||
+            ( !is_numeric( $this->request->post['cardstream_countrycode'] ) )
+        ) {
 
-		if ( !$this->user->hasPermission( 'modify', 'payment/cardstream' ) ) {
+            $this->error['countrycode'] = $this->language->get( 'error_countrycode' );
+            $this->error['warning'] = $this->language->get( 'error_data' );
+        }
 
-			$this->error['warning'] = $this->language->get( 'error_permission' );
+        if ( !$this->error ) {
 
-		}
+            return true;
 
-		if ( !$this->request->post['cardstream_merchantid'] ) {
+        } else {
 
-			$this->error['merchantid'] = $this->language->get( 'error_merchantid' );
+            return false;
 
-		}
+        }
 
-		if ( !$this->request->post['cardstream_merchantsecret'] ) {
-
-			$this->error['merchantsecret'] = $this->language->get( 'error_merchantsecret' );
-
-		}
-
-		if ( ( !$this->request->post['cardstream_currencycode'] ) ||
-			 ( !is_numeric( $this->request->post['cardstream_currencycode'] ) )
-		) {
-
-			$this->error['currencycode'] = $this->language->get( 'error_currencycode' );
-
-		}
-
-		if ( ( !$this->request->post['cardstream_countrycode'] ) ||
-			 ( !is_numeric( $this->request->post['cardstream_countrycode'] ) )
-		) {
-
-			$this->error['countrycode'] = $this->language->get( 'error_countrycode' );
-
-		}
-
-		if ( !$this->error ) {
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-
-	}
+    }
 
 }
