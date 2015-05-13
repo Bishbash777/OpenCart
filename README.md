@@ -15,13 +15,13 @@ Copy the contents of the httpdocs directory into the root OpenCart directory.
 Login to your OpenCart admin panel, then mouseover extensions in the side menu &amp;
 click Payment. Next, click the green + icon to install on the Cardstream row.
 
-![Opencart Install](/images/cardstream-install.png)
+[![Opencart Install](/images/cardstream-install.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/cardstream-install.png)
 
 **Step 3:**
 
 To begin editing the module settings, click Edit on the Cardstream row.
 
-![OpenCart Config settings](/images/cardstream-config-page.png)
+[![OpenCart Config settings](/images/cardstream-config-page.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/cardstream-config-page.png)
 
 
 | Config Option | Description |
@@ -36,4 +36,3 @@ To begin editing the module settings, click Edit on the Cardstream row.
 
 for each order in the History tab you can find detailed information from Cardstream to allow you to locate the payment in the cardstream MMS
 [![OpenCart Payment Information](/images/payment-information.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/payment-information.png)
-![OpenCart Payment Information](/images/payment-information.png)
