@@ -35,5 +35,5 @@ To begin editing the module settings, click Edit on the Cardstream row.
 ** Payment Information **
 
 for each order in the History tab you can find detailed information from Cardstream to allow you to locate the payment in the cardstream MMS
-
+[![OpenCart Payment Information](/images/payment-information.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/payment-information.png)
 ![OpenCart Payment Information](/images/payment-information.png)
