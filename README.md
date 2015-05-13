@@ -21,7 +21,7 @@ click Payment. Next, click the green + icon to install on the Cardstream row.
 
 To begin editing the module settings, click Edit on the Cardstream row.
 
-![Xcart Config settings](/images/cardstream-config-page.png)
+![OpenCart Config settings](/images/cardstream-config-page.png)
 
 
 | Config Option | Description |
@@ -31,3 +31,9 @@ To begin editing the module settings, click Edit on the Cardstream row.
 | Currency ID | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
 | Country ID | The 3 digit ISO country code for your location. Use 826 for the UK. |
 | Position | If you are using multiple payment gateways, you can use this field to adjust what position the Cardstream option appears on – The lower the number, the higher up the list the option will be. Select ‘Enabled’ to make Cardstream your customers default payment gateway. |
+
+** Payment Information **
+
+for each order in the History tab you can find detailed information from Cardstream to allow you to locate the payment in the cardstream MMS
+
+![OpenCart Payment Information](/images/payment-information.png)
