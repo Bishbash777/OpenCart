@@ -1,7 +1,7 @@
 Compatibility
 =========================
 
-Compatible with version 2.0.x of Opencart, is not compatable with version 1.5.6.4 and below.
+Compatible with version 2.0.x of Opencart, is not compatible with version 1.5.6.4 and below.
 
 Installation Instructions
 =========================
@@ -12,8 +12,10 @@ Copy the contents of the httpdocs directory into the root OpenCart directory.
 
 **Step 2:**
 
-Login to your OpenCart admin panel, then mouseover extensions in the top menu &amp;
-click Payment. Next, click install on the Cardstream row.
+Login to your OpenCart admin panel, then mouseover extensions in the side menu &amp;
+click Payment. Next, click the green + icon to install on the Cardstream row.
+
+![Opencart Install](/images/cardstream-install.png)
 
 **Step 3:**
 
