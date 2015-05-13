@@ -1,7 +1,7 @@
 Compatibility
 =========================
 
-Compatible with version 1.5 of Opencart.
+Compatible with version 1.5 of Opencart, for version 2.0.x and higher please visit: https://github.com/cardstream/Opencart/tree/2.0.x
 
 Installation Instructions
 =========================
