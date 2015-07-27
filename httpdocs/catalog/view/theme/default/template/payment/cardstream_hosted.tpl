@@ -10,6 +10,7 @@
 		"transactionUnique" => $trans_id,
 		"orderRef"          => "Order " . $trans_id,
 		"redirectURL"       => $callback,
+		"callbackURL" 		=> $callback,
 		"customerName"      => $bill_name,
 		"customerAddress"   => $bill_addr,
 		"customerPostCode"  => $bill_post_code,
