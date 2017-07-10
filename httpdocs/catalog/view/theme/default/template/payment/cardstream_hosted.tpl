@@ -11,6 +11,7 @@
 		"orderRef"          => "Order " . $trans_id,
 		"redirectURL"       => $callback,
 		"callbackURL" 		=> $callback,
+		"formResponsive"	=> $form_responsive,
 		"customerName"      => $bill_name,
 		"customerAddress"   => $bill_addr,
 		"customerPostCode"  => $bill_post_code,

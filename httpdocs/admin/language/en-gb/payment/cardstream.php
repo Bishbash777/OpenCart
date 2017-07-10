@@ -13,7 +13,7 @@ $_['text_cardstream'] =
 $_['text_merchantid']       = "Enter the merchant ID provided by Cardstream MMS, use 100001 for testing";
 $_['text_merchantsecret']   = "Enter the merchant secret provided by Cardstream MMS, use Circle4Take40Idea for testing";
 $_['text_currencycode']     = "Enter the merchant account currency code, use 826 for GBP";
-$_['text_countrycode']     = "Enter the merchant account Country code, use 826 for GBP";
+$_['text_countrycode']      = "Enter the merchant account Country code, use 826 for GBP";
 
 // Entrys
 $_['entry_merchantid']     = 'Merchant ID:';
@@ -28,7 +28,7 @@ $_['entry_status']       = 'Cardstream On/Off:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Errors
-$_['error_permission']     = 'Warning: You do not have permission to modify payment CardStream!';
+$_['error_permission']     = 'Warning: You do not have permission to modify the Cardstream payment extension!';
 $_['error_data']           = 'Please correct the errors shown below';
 $_['error_merchantid']     = 'Merchant ID must be a number and not left empty';
 $_['error_merchantsecret'] = 'Merchant Secret Required!';
@@ -36,7 +36,7 @@ $_['error_countrycode']    = 'Valid country code required - must be numeric';
 $_['error_currencycode']   = 'Valid currency code required - must be numeric';
 
 // module type switch information
-$_['entry_module_type']         = 'Integration Method';
+$_['entry_module_type']    = 'Integration Method';
 $_['entry_module_hosted']  = 'Hosted Form (offsite)';
 $_['entry_module_iframe']  = 'Hosted Form (onsite)';
 $_['entry_module_direct']  = 'Direct (Server 2 Server)';

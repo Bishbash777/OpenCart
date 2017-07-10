@@ -41,12 +41,13 @@ class ControllerPaymentCardstream extends Controller {
         $data['text_successful'] = $this->language->get( 'text_successful' );
         $data['text_fail']       = $this->language->get( 'text_fail' );
 
-        $data['entry_merchantid']     = $this->language->get( 'entry_merchantid' );
-        $data['entry_merchantsecret'] = $this->language->get( 'entry_merchantsecret' );
-        $data['entry_order_status']   = $this->language->get( 'entry_order_status' );
-        $data['entry_geo_zone']       = $this->language->get( 'entry_geo_zone' );
-        $data['entry_status']         = $this->language->get( 'entry_status' );
-        $data['entry_sort_order']     = $this->language->get( 'entry_sort_order' );
+        $data['entry_merchantid']      = $this->language->get( 'entry_merchantid' );
+        $data['entry_merchantsecret']  = $this->language->get( 'entry_merchantsecret' );
+        $data['entry_order_status']    = $this->language->get( 'entry_order_status' );
+        $data['entry_geo_zone']        = $this->language->get( 'entry_geo_zone' );
+        $data['entry_form_responsive'] = $this->language->get( 'entry_form_responsive' );
+        $data['entry_status']          = $this->language->get( 'entry_status' );
+        $data['entry_sort_order']      = $this->language->get( 'entry_sort_order' );
 
         $data['entry_currencycode'] = $this->language->get( 'entry_currencycode' );
         $data['entry_countrycode']  = $this->language->get( 'entry_countrycode' );
@@ -170,6 +171,16 @@ class ControllerPaymentCardstream extends Controller {
         } else {
 
             $data['cardstream_status'] = $this->config->get( 'cardstream_status' );
+
+        }
+
+        if ( isset( $this->request->post['cardstream_form_responsive'] ) ) {
+
+          $data['cardstream_form_responsive'] = $this->request->post['cardstream_form_responsive'];
+
+        } else {
+
+          $data['cardstream_form_responsive'] = $this->config->get( 'cardstream_form_responsive' );
 
         }
 
