@@ -7,7 +7,7 @@ $_['text_edit'] = "Edit Cardstream Settings";
 $_['text_payment']    = 'Payment';
 $_['text_success']    = 'Success: You have modified Cardstream account details!';
 $_['text_cardstream'] =
-    '<a onclick="window.open(\'https://www.cardstream.com\');"><img src="view/image/payment/cardstream.png" alt="Cardstream" title="Cardstream" style="border: 1px solid #EEEEEE;" /></a>';
+	'<a onclick="window.open(\'https://www.cardstream.com\');"><img src="view/image/payment/cardstream.png" alt="Cardstream" title="Cardstream" style="border: 1px solid #EEEEEE;" /></a>';
 
 // placeholders
 $_['text_merchantid']       = "Enter the merchant ID provided by Cardstream MMS, use 100001 for testing";
@@ -39,7 +39,7 @@ $_['error_currencycode']   = 'Valid currency code required - must be numeric';
 $_['entry_module_type']         = 'Integration Method';
 $_['entry_module_hosted']  = 'Hosted Form (offsite)';
 $_['entry_module_iframe']  = 'Hosted Form (onsite)';
-$_['entry_module_direct']  = 'Direct (Server 2 Server)';
+$_['entry_module_direct']  = 'Direct';
 $_['error_direct_ssl_required'] = 'To use Cardstream Direct you must have a SSL Certificate installed, this is due to PCI compliance requirements';
 
 

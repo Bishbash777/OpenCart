@@ -1,7 +1,7 @@
 Compatibility
 =========================
 
-Compatible with version 2.0.x of OpenCart and higher.
+Compatible with version 2.3.x of OpenCart.
 
 Tested and working on OpenCart v2.3.0.2
 
@@ -15,26 +15,13 @@ Copy the contents of the httpdocs directory into the root OpenCart directory.
 **Step 2:**
 
 Login to your OpenCart admin panel, then mouseover extensions in the side menu &amp;
-click Payment. Next, click the green + icon to install on the Cardstream row.
-
-[![Opencart Install](/images/cardstream-install.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/cardstream-install.png)
+click Payment. Next, click the green + icon to install on the Cardstream row (refer to images/cardstream-install.png).
 
 **Step 3:**
 
-To begin editing the module settings, click Edit on the Cardstream row.
+To change the module settings click on the pencil icon (refer to images/cardstream-install.png).
 
-[![OpenCart Config settings](/images/cardstream-config-page.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/cardstream-config-page.png)
+**Step 4:**
+Fill in your merchant ID, merchant secret and the currency and country codes as required by the module (refer to images/cardstream-config-page.png).
 
-
-| Config Option | Description |
-| :-------------|:------------|
-| Integration Type | Toggle the module to use Hosted or Iframe Integration |
-| Merchant ID | Enter your merchant ID here, or 0000992 for test mode. |
-| Currency ID | The 3 digit ISO currency code. Use 826 for Pounds Sterling. |
-| Country ID | The 3 digit ISO country code for your location. Use 826 for the UK. |
-| Position | If you are using multiple payment gateways, you can use this field to adjust what position the Cardstream option appears on – The lower the number, the higher up the list the option will be. Select ‘Enabled’ to make Cardstream your customers default payment gateway. |
-
-** Payment Information **
-
-for each order in the History tab you can find detailed information from Cardstream to allow you to locate the payment in the cardstream MMS
-[![OpenCart Payment Information](/images/payment-information.png)](https://raw.githubusercontent.com/cardstream/Opencart/2.0.x/images/payment-information.png)
+**Note** You can find detailed payment information in the history tab whilst looking at an order (see images/payment-installation.png as an example)
