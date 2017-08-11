@@ -1,4 +1,12 @@
-Version 2.3.x and above
+Version 3.0.X
+=================================
+
+Project Code: [GitHub Code](https://github.com/cardstream/OpenCart/tree/3.0.X)
+
+Downloadable: [Download Plugin Link](https://github.com/cardstream/OpenCart/archive/3.0.X.zip)
+
+
+Version 2.3.x
 =================================
 
 Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.3.x)
