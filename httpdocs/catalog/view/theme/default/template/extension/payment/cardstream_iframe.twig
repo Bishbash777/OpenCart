@@ -1,0 +1,53 @@
+
+	{% set formdata = {
+		merchantID : merchantid,
+		amount : amount,
+		action : "SALE",
+		type : 1,
+		countryCode : countrycode,
+		currencyCode : currencycode,
+		transactionUnique : trans_id,
+		orderRef : "Order " ~ trans_id,
+		redirectURL : callback,
+		callbackURL 		 : callback,
+		formResponsive	 : form_responsive,
+		customerName : bill_name,
+		customerAddress : bill_addr,
+		customerPostCode : bill_post_code,
+		customerEmail : bill_email,
+		customerPhone : bill_tel,
+		item1Description : "Order " ~ trans_id,
+		item1Quantity : 1,
+		item1GrossValue : amount
+} %}
+
+{% set formdata = formdata|merge({signature : sig}) %}
+
+
+
+
+<iframe id="cardstreamframe" name="cardstreamframe" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
+
+<form id="cardstreamPaymentForm" action="https://gateway.cardstream.com/hosted/" method="post" target="cardstreamframe">
+    		{% for key,value in formdata %}
+
+ {{ "<input type=\"hidden\" name=\"" ~ key ~ "\" value=\"" ~ value ~ "\" />" }}
+
+ {% endfor %}
+
+
+
+</form>
+
+<script>
+    // detects if jquery is loaded and adjusts the form for mobile devices
+    if (window.jQuery) {
+        $(function(){
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                $('form#cardstreamPaymentForm').append('<input type="hidden" name="formResponsive"  value="Y"/>');
+                $('#cardstreamframe').css({ height : '1300px', width : '50%'});
+            }
+        });
+    }
+    document.getElementById('cardstreamPaymentForm').submit();
+</script>

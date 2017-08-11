@@ -1,0 +1,39 @@
+
+{% set formdata = {
+	merchantID : merchantid,
+	amount : amount,
+	action : "SALE",
+	type : 1,
+	countryCode : countrycode,
+	currencyCode : currencycode,
+	transactionUnique : trans_id,
+	orderRef : "Order " ~ trans_id,
+	redirectURL : callback,
+	callbackURL 		 : callback,
+	customerName : bill_name,
+	customerAddress : bill_addr,
+	customerPostCode : bill_post_code,
+	customerEmail : bill_email,
+	customerPhone : bill_tel,
+	item1Description : "Order " ~ trans_id,
+	item1Quantity : 1,
+	item1GrossValue : amount
+} %}
+
+{% set formdata = formdata|merge({signature : sig}) %}
+
+
+
+<form action="https://gateway.cardstream.com/hosted/" method="post">
+    		{% for key,value in formdata %}
+
+ {{ "<input type=\"hidden\" name=\"" ~ key ~ "\" value=\"" ~ value ~ "\" />" }}
+
+ {% endfor %}
+
+    <div class="buttons">
+        <div class="right">
+            <input type="submit" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary"/>
+        </div>
+    </div>
+</form>

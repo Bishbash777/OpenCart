@@ -1,9 +1,9 @@
 Compatibility
 =========================
 
-Compatible with version 2.3.x of OpenCart.
+Compatible with OpenCart v3
 
-Tested and working on OpenCart v2.3.0.2
+Tested and working on OpenCart v3.0.2.0
 
 Installation Instructions
 =========================
@@ -14,14 +14,12 @@ Copy the contents of the httpdocs directory into the root OpenCart directory.
 
 **Step 2:**
 
-Login to your OpenCart admin panel, then mouseover extensions in the side menu &amp;
-click Payment. Next, click the green + icon to install on the Cardstream row (refer to images/cardstream-install.png).
+Login to your OpenCart admin panel. Click Extensions in the Navigation menu to show hidden menu items in the drop-down. In the drop-down click on Extensions and choose the extension type Payments. Find Cardstream in the table below and click on the green + icon to install the extension.
 
 **Step 3:**
 
-To change the module settings click on the pencil icon (refer to images/cardstream-install.png).
+To change the module settings click on the blue pencil icon.
 
 **Step 4:**
-Fill in your merchant ID, merchant secret and the currency and country codes as required by the module (refer to images/cardstream-config-page.png).
+Fill in your merchant ID, merchant secret and the currency and country codes as required by the module.
 
-**Note** You can find detailed payment information in the history tab whilst looking at an order (see images/payment-installation.png as an example)

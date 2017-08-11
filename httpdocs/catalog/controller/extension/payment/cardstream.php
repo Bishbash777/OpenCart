@@ -20,15 +20,15 @@ class ControllerExtensionPaymentCardstream extends Controller
 
 		$this->load->language('extension/payment/cardstream');
 
-		if ($this->config->get('cardstream_module_type') == 'hosted') {
+		if ($this->config->get('payment_cardstream_module_type') == 'hosted') {
 			return $this->createHostedForm();
 		}
 
-		if ($this->config->get('cardstream_module_type') == 'direct') {
+		if ($this->config->get('payment_cardstream_module_type') == 'direct') {
 			return $this->createDirectForm();
 		}
 
-		if ($this->config->get('cardstream_module_type') == 'iframe') {
+		if ($this->config->get('payment_cardstream_module_type') == 'iframe') {
 			return $this->createEmbeddedForm();
 		}
 
@@ -38,11 +38,11 @@ class ControllerExtensionPaymentCardstream extends Controller
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['continue'] = $this->url->link('checkout/success');
-		$data['merchantid']     = $this->config->get('cardstream_merchantid');
-		$data['merchantsecret'] = $this->config->get('cardstream_merchantsecret');
-		$data['countrycode'] = $this->config->get('cardstream_countrycode');
-		$data['currencycode'] = $this->config->get('cardstream_currencycode');
-		$data['form_responsive'] = $this->config->get('cardstream_form_responsive');
+		$data['merchantid']     = $this->config->get('payment_cardstream_merchantid');
+		$data['merchantsecret'] = $this->config->get('payment_cardstream_merchantsecret');
+		$data['countrycode'] = $this->config->get('payment_cardstream_countrycode');
+		$data['currencycode'] = $this->config->get('payment_cardstream_currencycode');
+		$data['form_responsive'] = $this->config->get('payment_cardstream_form_responsive');
 
 		$this->load->model('checkout/order');
 
@@ -56,7 +56,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 		) * 100;
 
 		$data['trans_id'] = $this->session->data['order_id'];
-		$data['callback'] = $this->url->link('/extension/payment/cardstream/callback', '', 'SSL');
+		$data['callback'] = $this->url->link('/extension/payment/cardstream/callback', '', true);
 		$data['bill_name'] = $order['payment_firstname'] . ' ' . $order['payment_lastname'];
 
 		$data['bill_addr'] = "";
@@ -74,6 +74,34 @@ class ControllerExtensionPaymentCardstream extends Controller
 		$data['bill_post_code'] = $order['payment_postcode'];
 		$data['bill_email'] = $order['email'];
 		$data['bill_tel'] = $order['telephone'];
+
+		$formdata = array(
+			"merchantID"        => $data['merchantid'],
+			"amount"            => $data['amount'],
+			"action"            => "SALE",
+			"type"              => 1,
+			"countryCode"       => $data['countrycode'],
+			"currencyCode"      => $data['currencycode'],
+			"transactionUnique" => $data['trans_id'],
+			"orderRef"          => "Order " . $data['trans_id'],
+			"redirectURL"       => $data['callback'],
+			"callbackURL" 		=> $data['callback'],
+			"formResponsive"	=> $data['form_responsive'],
+			"customerName"      => $data['bill_name'],
+			"customerAddress"   => $data['bill_addr'],
+			"customerPostCode"  => $data['bill_post_code'],
+			"customerEmail"     => $data['bill_email'],
+			"customerPhone"     => $data['bill_tel'],
+			"item1Description"  => "Order " . $data['trans_id'],
+			"item1Quantity"     => 1,
+			"item1GrossValue"   => $data['amount']
+	);
+	ksort( $formdata );
+
+	$signature = http_build_query( $formdata, '', '&' ) . $data['merchantsecret'];
+
+	$data['sig'] = hash( 'SHA512', $signature );
+
 
 		return $this->load->view('extension/payment/cardstream_hosted', $data);
 
@@ -82,11 +110,11 @@ class ControllerExtensionPaymentCardstream extends Controller
 	public function createEmbeddedForm() {
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
-		$data['merchantid']     = $this->config->get('cardstream_merchantid');
-		$data['merchantsecret'] = $this->config->get('cardstream_merchantsecret');
-		$data['countrycode'] = $this->config->get('cardstream_countrycode');
-		$data['currencycode'] = $this->config->get('cardstream_currencycode');
-		$data['form_responsive'] = $this->config->get('cardstream_form_responsive');
+		$data['merchantid']     = $this->config->get('payment_cardstream_merchantid');
+		$data['merchantsecret'] = $this->config->get('payment_cardstream_merchantsecret');
+		$data['countrycode'] = $this->config->get('payment_cardstream_countrycode');
+		$data['currencycode'] = $this->config->get('payment_cardstream_currencycode');
+		$data['form_responsive'] = $this->config->get('payment_cardstream_form_responsive');
 
 		$this->load->model('checkout/order');
 
@@ -101,7 +129,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 
 
 		$data['trans_id'] = $this->session->data['order_id'];
-		$data['callback'] = $this->url->link('payment/cardstream/callback', '', 'SSL');
+		$data['callback'] = $this->url->link('extension/payment/cardstream/callback', '', true);
 		$data['bill_name'] = $order['payment_firstname'] . ' ' . $order['payment_lastname'];
 
 		$data['bill_addr'] = "";
@@ -119,6 +147,33 @@ class ControllerExtensionPaymentCardstream extends Controller
 		$data['bill_post_code'] = $order['payment_postcode'];
 		$data['bill_email'] = $order['email'];
 		$data['bill_tel'] = $order['telephone'];
+
+		$formdata = array(
+			"merchantID"        => $data['merchantid'],
+			"amount"            => $data['amount'],
+			"action"            => "SALE",
+			"type"              => 1,
+			"countryCode"       => $data['countrycode'],
+			"currencyCode"      => $data['currencycode'],
+			"transactionUnique" => $data['trans_id'],
+			"orderRef"          => "Order " . $data['trans_id'],
+			"redirectURL"       => $data['callback'],
+			"callbackURL" 		=> $data['callback'],
+			"formResponsive"	=> $data['form_responsive'],
+			"customerName"      => $data['bill_name'],
+			"customerAddress"   => $data['bill_addr'],
+			"customerPostCode"  => $data['bill_post_code'],
+			"customerEmail"     => $data['bill_email'],
+			"customerPhone"     => $data['bill_tel'],
+			"item1Description"  => "Order " . $data['trans_id'],
+			"item1Quantity"     => 1,
+			"item1GrossValue"   => $data['amount']
+	);
+	ksort( $formdata );
+
+	$signature = http_build_query( $formdata, '', '&' ) . $data['merchantsecret'];
+
+	$data['sig'] = hash( 'SHA512', $signature );
 
 		return $this->load->view('extension/payment/cardstream_iframe', $data);
 	}
@@ -229,7 +284,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 						true //Send notification
 					);
 				}
-				$this->response->redirect($this->url->link('checkout/success', $this->session->data['token'], 'SSL'));
+				$this->response->redirect($this->url->link('checkout/success', $this->session->data['token'], true));
 			} else {
 				if ($order) {
 					try {
@@ -246,7 +301,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 			$error = true;
 		}
 		if ($error) {
-			$this->response->redirect($this->url->link('checkout/failure', $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('checkout/failure', $this->session->data['token'], true));
 		}
 
 	}

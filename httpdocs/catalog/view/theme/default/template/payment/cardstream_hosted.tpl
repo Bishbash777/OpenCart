@@ -22,23 +22,23 @@
 );
 ksort( $formdata );
 
-$signature = http_build_query( $formdata ) . $merchantsecret;
+$signature = http_build_query( $formdata, '', '&' ) . $merchantsecret;
 
 $formdata['signature'] = hash( 'SHA512', $signature );
 
 ?>
 
 <form action="https://gateway.cardstream.com/hosted/" method="post">
-	<?php
+    <?php
 		foreach ( $formdata as $key => $value ) {
 
-	echo "<input type=\"hidden\" name=\"" . $key . "\" value=\"" . $value . "\" />";
+    echo "<input type=\"hidden\" name=\"" . $key . "\" value=\"" . $value . "\" />\r\n";
 
-	}
-	?>
-	<div class="buttons">
-		<div class="right">
-			<input type="submit" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary"/>
-		</div>
-	</div>
+    }
+    ?>
+    <div class="buttons">
+        <div class="pull-right">
+            <input type="submit" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" />
+        </div>
+    </div>
 </form>
