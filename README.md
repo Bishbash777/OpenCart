@@ -21,5 +21,6 @@ Login to your OpenCart admin panel. Click Extensions in the Navigation menu to s
 To change the module settings click on the blue pencil icon.
 
 **Step 4:**
+
 Fill in your merchant ID, merchant secret and the currency and country codes as required by the module.
 
