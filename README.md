@@ -18,7 +18,7 @@ Login to your OpenCart admin panel, then mouse-over extensions and click on the 
 
 **Step 3:**
 
-Find the Open Cart Cardstream module in the list presented on the 'Payments' page  and click the green + icon to install the module. To change the module settings click on the blue pencil icon beside it.
+Find the OpenCart Cardstream module in the list presented on the 'Payments' page  and click the green + icon to install the module. To change the module settings click on the blue pencil icon beside it.
 ![Cardstream Module Settings](/images/cardstream-install.png)
 
 **Step 4:**
