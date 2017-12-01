@@ -16,10 +16,11 @@ $_['text_currencycode']     = "Enter the merchant account currency code, use 826
 $_['text_countrycode']     = "Enter the merchant account Country code, use 826 for GBP";
 
 // Entrys
-$_['entry_merchantid']     = 'Merchant ID:';
-$_['entry_merchantsecret'] = 'Merchant Secret:';
-$_['entry_countrycode']    = 'Country Code';
-$_['entry_currencycode']   = 'Currency Code';
+$_['entry_merchantid']      = 'Merchant ID:';
+$_['entry_merchantsecret']  = 'Merchant Secret:';
+$_['entry_countrycode']     = 'Country Code';
+$_['entry_currencycode']    = 'Currency Code';
+$_['entry_form_responsive'] = 'Form Responsive';
 
 $_['entry_order_status'] = 'Order Status:';
 $_['entry_geo_zone']     = 'Geo Zone:';
@@ -27,19 +28,19 @@ $_['entry_status']       = 'Cardstream On/Off:';
 $_['entry_sort_order']   = 'Sort Order:';
 
 // Errors
-$_['error_permission']     = 'Warning: You do not have permission to modify payment CardStream!';
-$_['error_data']           = 'Please correct the errors shown below';
-$_['error_merchantid']     = 'Merchant ID must be a number and not left empty';
-$_['error_merchantsecret'] = 'Merchant Secret Required!';
-$_['error_countrycode']    = 'Valid country code required - must be numeric';
-$_['error_currencycode']   = 'Valid currency code required - must be numeric';
+$_['error_msg_permission']     = 'Warning: You do not have permission to modify the below configuration';
+$_['error_msg_data']           = 'Please correct the errors shown below';
+$_['error_msg_merchantid']     = 'Merchant ID must be a number and not left empty';
+$_['error_msg_merchantsecret'] = 'Merchant Secret Required!';
+$_['error_msg_countrycode']    = 'Valid country code required - must be numeric';
+$_['error_msg_currencycode']   = 'Valid currency code required - must be numeric';
 
 // module type switch information
 $_['entry_module_type']         = 'Integration Method';
 $_['entry_module_hosted']  = 'Hosted Form (offsite)';
 $_['entry_module_iframe']  = 'Hosted Form (onsite)';
 $_['entry_module_direct']  = 'Direct (Server 2 Server)';
-$_['error_direct_ssl_required'] = 'To use Cardstream Direct you must have a SSL Certificate installed, this is due to PCI compliance requirements';
+$_['error_direct_ssl_required'] = 'To use Direct you must have a SSL Certificate installed, this is due to PCI compliance requirements';
 
 
 

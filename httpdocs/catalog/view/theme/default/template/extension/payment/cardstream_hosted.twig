@@ -1,40 +1,34 @@
+{% if (loadIframe is defined and loadIframe == true) %}
+<iframe id="paymentgatewayframe" name="paymentgatewayframe" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
+{% endif %}
 
-	{% set formdata = {
-		merchantID : merchantid,
-		amount : amount,
-		action : "SALE",
-		type : 1,
-		countryCode : countrycode,
-		currencyCode : currencycode,
-		transactionUnique : trans_id,
-		orderRef : "Order " ~ trans_id,
-		redirectURL : callback,
-		callbackURL 		 : callback,
-		formResponsive	 : form_responsive,
-		customerName : bill_name,
-		customerAddress : bill_addr,
-		customerPostCode : bill_post_code,
-		customerEmail : bill_email,
-		customerPhone : bill_tel,
-		item1Description : "Order " ~ trans_id,
-		item1Quantity : 1,
-		item1GrossValue : amount
-} %}
+<form id="paymentgatewaymoduleform" action="{{ form_hosted_url }}" method="post" {% if (loadIframe is defined and loadIframe == true) %} target="paymentgatewayframe" {% endif %}>
+	{% for key,value in formdata %}
 
-{% set formdata = formdata|merge({signature : sig}) %}
+		{{ "<input type=\"hidden\" name=\"" ~ key ~ "\" value=\"" ~ value ~ "\" />" }}
 
+	{% endfor %}
 
-
-<form action="https://gateway.cardstream.com/hosted/" method="post">
-{% for key,value in formdata %}
-
- {{ "<input type=\"hidden\" name=\"" ~ key ~ "\" value=\"" ~ value ~ "\" />\r\n" }}
-
- {% endfor %}
-
-    <div class="buttons">
-        <div class="pull-right">
-            <input type="submit" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
-        </div>
-    </div>
+	{% if (loadIframe is not defined or loadIframe == false) %}
+	<div class="buttons">
+		<div class="pull-right">
+			<input type="submit" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
+		</div>
+	</div>
+	{% endif %}
 </form>
+
+{% if (loadIframe is defined and loadIframe == true) %}
+<script>
+	// detects if jquery is loaded and adjusts the form for mobile devices
+	if (window.jQuery) {
+		$(function(){
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				$('form#paymentgatewaymoduleform').append('<input type="hidden" name="formResponsive"  value="Y"/>');
+				$('#paymentgatewayframe').css({ height : '1300px', width : '50%'});
+			}
+		});
+	}
+	document.getElementById('paymentgatewaymoduleform').submit();
+</script>
+{% endif %}

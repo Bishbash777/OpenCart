@@ -2,6 +2,9 @@
 // Heading
 $_['heading_title'] = 'Thank you for shopping with %s .... ';
 
+$_['form_hosted_url'] = 'https://gateway.cardstream.com/hosted/';
+$_['form_direct_url'] = 'https://gateway.cardstream.com/direct/';
+
 // Text
 $_['text_title']        = 'Credit Card / Debit Card (Cardstream)';
 $_['text_response']     = 'Response from Cardstream:';
