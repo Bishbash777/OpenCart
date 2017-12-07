@@ -161,8 +161,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 			$this->load->model('checkout/order');
 			$orderId = $data['transactionUnique'];
 			$order = $this->model_checkout_order->getOrder($orderId);
-			$amountExpected = $this->currency->format($order['total'], $order['currency_code'], $order['currency_value'], false);
-			$amountExpected = intval(bcmul(round($amount, 2), 100, 0));
+			$amountExpected = bcmul(round($this->currency->format($order['total'], $order['currency_code'], $order['currency_value'], false), 2), 100, 0);
 
 			if (intval($data['responseCode']) == 0 && $data['amountReceived'] == $amountExpected) {
 				// Only update if the order id has not been properly set yet
