@@ -48,12 +48,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 
 		$order = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['amount'] = (int)$this->currency->format(
-			$order['total'],
-			$order['currency_code'],
-			$order['currency_value'],
-			false
-		) * 100;
+		$data['amount'] = intval(bcmul(round($this->currency->format($order['total'], $order['currency_code'], $order['currency_value'], false), 2), 100, 0));
 
 		$data['trans_id'] = $this->session->data['order_id'];
 		$data['callback'] = $this->url->link('/extension/payment/cardstream/callback', '', 'SSL');
@@ -92,13 +87,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 
 		$order = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data['amount'] = (int)$this->currency->format(
-			$order['total'],
-			$order['currency_code'],
-			$order['currency_value'],
-			false
-		) * 100;
-
+		$data['amount'] = intval(bcmul(round($this->currency->format($order['total'], $order['currency_code'], $order['currency_value'], false), 2), 100, 0));
 
 		$data['trans_id'] = $this->session->data['order_id'];
 		$data['callback'] = $this->url->link('payment/cardstream/callback', '', 'SSL');
@@ -217,7 +206,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 			$this->load->model('checkout/order');
 			$orderId = $data['transactionUnique'];
 			$order = $this->model_checkout_order->getOrder($orderId);
-			$amountExpected = (int)$this->currency->format($order['total'], $order['currency_code'], $order['currency_value'], false) * 100;
+			$amountExpected = bcmul(round($this->currency->format($order['total'], $order['currency_code'], $order['currency_value'], false), 2), 100, 0);
 
 			if (intval($data['responseCode']) == 0 && $data['amountReceived'] == $amountExpected) {
 				//Only update if the order id has not been properly set yet
