@@ -1,45 +1,32 @@
-<?php
+<?php if (isset($loadIframe) && $loadIframe == true) { ?>
+	<iframe id="paymentgatewayframe" name="paymentgatewayframe" frameBorder="0" seamless='seamless' style="width:699px; height:1073px;margin: 0 auto;display:block;"></iframe>
+<?php } ?>
 
-	$formdata = array(
-		"merchantID"        => $merchantid,
-		"amount"            => $amount,
-		"action"            => "SALE",
-		"type"              => 1,
-		"countryCode"       => $countrycode,
-		"currencyCode"      => $currencycode,
-		"transactionUnique" => $trans_id,
-		"orderRef"          => "Order " . $trans_id,
-		"redirectURL"       => $callback,
-		"callbackURL" 		=> $callback,
-		"formResponsive"	=> $form_responsive,
-		"customerName"      => $bill_name,
-		"customerAddress"   => $bill_addr,
-		"customerPostCode"  => $bill_post_code,
-		"customerEmail"     => $bill_email,
-		"customerPhone"     => $bill_tel,
-		"item1Description"  => "Order " . $trans_id,
-		"item1Quantity"     => 1,
-		"item1GrossValue"   => $amount
-);
-ksort( $formdata );
+<form id="paymentgatewaymoduleform" action="<?=$form_hosted_url?>" method="post" <?php if (isset($loadIframe) && $loadIframe == true) { ?> target="paymentgatewayframe" <?php } ?>>
+	<?php foreach ($formdata as $key=>$value) { ?>
+		<input type="hidden" name="<?=$key?>" value="<?=$value?>"/>
+	<?php } ?>
 
-$signature = http_build_query( $formdata, '', '&' ) . $merchantsecret;
-
-$formdata['signature'] = hash( 'SHA512', $signature );
-
-?>
-
-<form action="https://gateway.cardstream.com/hosted/" method="post">
-    <?php
-		foreach ( $formdata as $key => $value ) {
-
-    echo "<input type=\"hidden\" name=\"" . $key . "\" value=\"" . $value . "\" />\r\n";
-
-    }
-    ?>
-    <div class="buttons">
-        <div class="pull-right">
-            <input type="submit" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" />
-        </div>
-    </div>
+	<?php if (empty(@$loadIframe)) { ?>
+	<div class="buttons">
+		<div class="pull-right">
+			<input type="submit" value="<?=$button_confirm?>" id="button-confirm" class="btn btn-primary" />
+		</div>
+	</div>
+	<?php } ?>
 </form>
+
+<?php if (isset($loadIframe) && $loadIframe == true) { ?>
+<script>
+	// detects if jquery is loaded and adjusts the form for mobile devices
+	if (window.jQuery) {
+		$(function(){
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				$('form#paymentgatewaymoduleform').append('<input type="hidden" name="formResponsive"  value="Y"/>');
+				$('#paymentgatewayframe').css({ height : '1300px', width : '50%'});
+			}
+		});
+	}
+	document.getElementById('paymentgatewaymoduleform').submit();
+</script>
+<?php } ?>
