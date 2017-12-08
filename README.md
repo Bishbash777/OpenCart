@@ -14,7 +14,15 @@ Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.3.x)
 Downloadable: [Download Plugin Link](https://github.com/cardstream/Opencart/archive/2.3.x.zip)
 
 
-Version 2.0.x to Version 2.2.x
+Version 2.2.x
+=================================
+
+Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.2.x)
+
+Downloadable: [Download Plugin Link](https://github.com/cardstream/Opencart/archive/2.2.x.zip)
+
+
+Version 2.0.x to Version 2.1.x
 =================================
 
 Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.0.x)
