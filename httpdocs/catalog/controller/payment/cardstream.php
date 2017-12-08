@@ -32,9 +32,7 @@ class ControllerPaymentCardstream extends Controller {
 
 		$this->data['merchantid']     = $this->config->get( 'cardstream_merchantid' );
 		$this->data['merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
-		$this->data['amount']         =
-			(int)round( ( $this->currency->format( $order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false ) *
-						  100 ) );
+		$this->data['amount']         = intval(bcmul(round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false), 2), 100, 0));
 
 
 		$this->data['countrycode'] = $this->config->get( 'cardstream_countrycode' );
@@ -123,9 +121,7 @@ class ControllerPaymentCardstream extends Controller {
 
 		$this->data['merchantid']     = $this->config->get( 'cardstream_merchantid' );
 		$this->data['merchantsecret'] = $this->config->get( 'cardstream_merchantsecret' );
-		$this->data['amount']         =
-			(int)round( ( $this->currency->format( $order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false ) *
-						  100 ) );
+		$this->data['amount']         = intval(bcmul(round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false), 2), 100, 0));
 
 
 		$this->data['countrycode'] = $this->config->get( 'cardstream_countrycode' );
@@ -331,11 +327,10 @@ class ControllerPaymentCardstream extends Controller {
 			$this->data['text_mismatch']     = $this->language->get( 'text_mismatch' );
 
 			if ( isset( $this->request->post['responseCode'] ) && $this->request->post['responseCode'] === "0" ) {
-				//var_dump((int) round( ( $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100 ) ),$this->request->post['amount'], $order_info['total']*100, $order_info,$this->request );
-				if ( (int)$this->request->post['amount'] ===
-					 (int)round( ( $this->currency->format( $order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false ) *
-								   100 ) )
-				) {
+
+				$amountExpected = bcmul(round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false), 2), 100, 0);
+
+				if ( $this->request->post['amount'] === $amountExpected) {
 					//Amount paid matches the amount paid.
 
 					$this->load->model( 'checkout/order' );
