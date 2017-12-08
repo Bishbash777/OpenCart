@@ -14,14 +14,16 @@ Copy the contents of the httpdocs directory into the root OpenCart directory.
 
 **Step 2:**
 
-Login to your OpenCart admin panel, then mouseover extensions in the side menu &amp;
-click Payment. Next, click the green + icon to install on the Cardstream row (refer to images/cardstream-install.png).
+Login to your OpenCart admin panel, then mouse-over extensions and click on the extensions menu item so that the drop-down menu is present. Then click on 'Payment' from the drop-down menu.
 
 **Step 3:**
 
-To change the module settings click on the pencil icon (refer to images/cardstream-install.png).
+Find the OpenCart Cardstream module in the list presented on the 'Payments' page  and click the green + icon to install the module. To change the module settings click on the blue pencil icon beside it.
+![Cardstream Module Settings](/images/cardstream-install.png)
 
 **Step 4:**
-Fill in your merchant ID, merchant secret and the currency and country codes as required by the module (refer to images/cardstream-config-page.png).
+Fill in your merchant ID, merchant secret, the currency code and country code as required
+![Cardstream Module Settings](/images/cardstream-config-page.png)
 
-**Note** You can find detailed payment information in the history tab whilst looking at an order (see images/payment-installation.png as an example)
+**Note** You can find detailed payment information in the history tab whilst looking at an order
+![Order History](/images/payment-information.png)
