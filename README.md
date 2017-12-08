@@ -1,9 +1,9 @@
 Compatibility
 =========================
 
-Compatible with version 2.0.x of OpenCart to 2.2.X.
+Compatible with version 2.0.x of OpenCart to 2.1.x
 
-Tested and working on OpenCart v2.2.0.0
+Tested and working on OpenCart v2.1.0.1
 
 Installation Instructions
 =========================
