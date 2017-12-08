@@ -109,7 +109,7 @@ class ControllerPaymentCardstream extends Controller
 
         $data['formdata'] = $formdata;
 
-        return $this->load->view('default/template/' . self::$url . '_hosted.tpl', $data);
+        return $this->load->view(self::$url . '_hosted.tpl', $data);
 
     }
 
@@ -127,7 +127,7 @@ class ControllerPaymentCardstream extends Controller
         $data['text_credit_card'] = $this->language->get('text_credit_card');
         $data['button_confirm'] = $this->language->get('button_confirm');
 
-        return $this->load->view('default/template/' . self::$url . '_direct.tpl', $data);
+        return $this->load->view(self::$url . '_direct.tpl', $data);
     }
 
     /**
