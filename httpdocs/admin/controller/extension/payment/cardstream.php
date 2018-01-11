@@ -136,6 +136,8 @@ class ControllerExtensionPaymentCardstream extends Controller {
 				$data['inputvalue_' . $field] = $this->request->post[$config];
 			} else if ($this->config->has($config)) {
 				$data['inputvalue_' . $field] = $this->config->get($config);
+			} else {
+				$data['inputvalue_' . $field] = '';
 			}
 
 			$data['inputname_' . $field] = self::$curi . '_' . $field;
