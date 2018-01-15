@@ -13,7 +13,7 @@ class ControllerExtensionPaymentCardstream extends Controller {
 		$module = strtolower(basename(__FILE__, '.php'));
 		self::$url = 'extension/payment/' . $module;
 		self::$curi = 'payment_' . $module;
-		self::$token = 'user_token=' . $this->session->data['user_token'];
+		self::$token = (isset($this->session->data['user_token']) ? '&user_token=' . $this->session->data['user_token'] : '');
 	}
 
 	public function index() {
