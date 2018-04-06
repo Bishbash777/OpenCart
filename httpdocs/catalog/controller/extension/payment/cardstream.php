@@ -84,6 +84,8 @@ class ControllerExtensionPaymentCardstream extends Controller
 		foreach ($addressFields as $item) {
 			$bill_addr .= $order[$item] . ($item == 'payment_country' ? "" : ",\n");
 		}
+		
+		$bill_addr = html_entity_decode($bill_addr); 
 
 		$formdata = array(
 			"merchantID"        => $merchant_id,
