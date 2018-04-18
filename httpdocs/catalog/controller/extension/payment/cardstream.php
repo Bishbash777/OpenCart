@@ -181,7 +181,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 				if ($order['order_status_id'] == 0) {
 					$this->model_checkout_order->addOrderHistory(
 						$data['transactionUnique'], // order ID
-						$this->config->get('config_order_status_id'), // order status ID
+						$this->config->get(self::$curi . 'order_status_id'), // order status ID
 						$this->buildMessage(), // Comment to status
 						true //Send notification
 					);
