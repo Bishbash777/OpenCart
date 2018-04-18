@@ -145,7 +145,7 @@ class ControllerExtensionPaymentCardstream extends Controller {
 			'merchantsecret',
 			'countrycode',
 			'currencycode',
-			'status_id',
+			'order_status_id',
 			'form_responsive',
 			'sort_order',
 			'module_type',
