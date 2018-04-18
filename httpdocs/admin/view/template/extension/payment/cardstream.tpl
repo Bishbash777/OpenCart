@@ -47,8 +47,8 @@
 						<label class="col-sm-2 control-label" for="cardstream_module_types"><?php echo $entry_module_type; ?></label>
 						<div class="col-sm-10">
 							<select name="cardstream_module_type" id="cardstream_module_type" class="form-control">
-								<option value="hosted" <? echo $cardstream_module_type == 'hosted' ? 'selected="selected"' : ''; ?> ><?php echo $entry_module_hosted; ?></option>
-								<option value="iframe" <? echo $cardstream_module_type == 'iframe' ? 'selected="selected"' : ''; ?>><?php echo $entry_module_iframe; ?></option>
+								<option value="hosted" <? echo $cardstream_module_type == 'hosted' ? 'selected="selected"' : ''; ?><?php echo $entry_module_hosted; ?></option>
+								<option value="iframe" <? echo $cardstream_module_type == 'iframe' ? 'selected="selected"' : ''; ?><?php echo $entry_module_iframe; ?></option>
 								<?php
 									// if (isset($entry_module_direct)) {
 									// 	echo '<option value="direct"' . ($cardstream_module_type == 'direct' ? 'selected="selected"' : '') . '>' .
