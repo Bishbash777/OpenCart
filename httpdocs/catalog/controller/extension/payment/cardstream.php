@@ -21,7 +21,7 @@ class ControllerExtensionPaymentCardstream extends Controller
 		$module = strtolower(basename(__FILE__, '.php'));
 		self::$url = 'extension/payment/' . $module;
 		self::$curi = $module;
-		self::$token = '&token=' . $this->session->data['token'];
+		self::$token = (isset($this->session->data['token']) ? '&token=' . $this->session->data['token'] : '');
 		$this->load->language('extension/payment/cardstream');
 	}
 
@@ -84,8 +84,8 @@ class ControllerExtensionPaymentCardstream extends Controller
 		foreach ($addressFields as $item) {
 			$bill_addr .= $order[$item] . ($item == 'payment_country' ? "" : ",\n");
 		}
-		
-		$bill_addr = html_entity_decode($bill_addr); 
+
+		$bill_addr = html_entity_decode($bill_addr);
 
 		$formdata = array(
 			"merchantID"        => $merchant_id,
