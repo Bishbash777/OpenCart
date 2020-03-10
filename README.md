@@ -1,38 +1,26 @@
-Version 3.0.X
-=================================
+Compatibility
+=========================
 
-Project Code: [GitHub Code](https://github.com/cardstream/OpenCart/tree/3.0.X)
+Compatible with OpenCart v3
 
-Downloadable: [Download Plugin Link](https://github.com/cardstream/OpenCart/archive/3.0.X.zip)
+Tested and working on OpenCart v3.0.2.0
 
+Installation Instructions
+=========================
 
-Version 2.3.x
-=================================
+**Step 1:**
 
-Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.3.x)
+Copy the contents of the httpdocs directory into the root OpenCart directory.
 
-Downloadable: [Download Plugin Link](https://github.com/cardstream/Opencart/archive/2.3.x.zip)
+**Step 2:**
 
+Login to your OpenCart admin panel. Click Extensions in the Navigation menu to show hidden menu items in the drop-down. In the drop-down click on Extensions and choose the extension type Payments. Find cardstream in the table below and click on the green + icon to install the extension.
 
-Version 2.2.x
-=================================
+**Step 3:**
 
-Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.2.x)
+To change the module settings click on the blue pencil icon.
 
-Downloadable: [Download Plugin Link](https://github.com/cardstream/Opencart/archive/2.2.x.zip)
+**Step 4:**
 
+Fill in your merchant ID, merchant secret and the currency and country codes as required by the module.
 
-Version 2.0.x to Version 2.1.x
-=================================
-
-Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/2.0.x)
-
-Downloadable: [Download Plugin Link](https://github.com/cardstream/Opencart/archive/2.0.x.zip)
-
-
-Version 1.x.x and before
-=================================
-
-Project Code: [GitHub Code](https://github.com/cardstream/Opencart/tree/1.5.6.4)
-
-Downloadable: [Download Plugin Link](https://github.com/cardstream/Opencart/archive/1.5.6.4.zip)
